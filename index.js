@@ -81,13 +81,17 @@ function startGame (boardSize) {
 
 function submitBoardSize () {
     const inputField = document.getElementById('boardSize');
-    const submitButton = document.getElementById('submitBoardSize');
-    inputField.style.display = 'none';
-    submitButton.style.display = 'none';
     const size = Number(inputField.value)
 
-    if (size > 2)
+    if (size > 2){
+        const submitButton = document.getElementById('submitBoardSize');
+        inputField.style.display = 'none';
+        submitButton.style.display = 'none';
         startGame(size)
+    }
+    else {
+        alert("Следи за руками")
+    }
 }
 
 function renderGrid(dimension) {
