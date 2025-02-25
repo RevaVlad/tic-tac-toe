@@ -4,6 +4,65 @@ const EMPTY = ' ';
 
 const container = document.getElementById('fieldWrapper');
 
+class TicTacToe {
+    constructor(size = 3) {
+        this.size = size;
+        this.board = Array.from({ length: size }, () => Array(size).fill(null));
+        this.currentPlayer = CROSS;
+        this.winner = null;
+    }
+
+    makeMove(row, col) {
+        if (this.winner) {
+            console.log("Game over! Winner is:", this.winner);
+            return false;
+        }
+        if (this.board[row][col] !== null) {
+            console.log("Invalid move! Cell already occupied.");
+            return false;
+        }
+        this.board[row][col] = this.currentPlayer;
+        this.checkWinner();
+        this.currentPlayer = this.currentPlayer === CROSS ? ZERO : CROSS;
+        return true;
+    }
+
+    checkWinner() {
+        const { size, board } = this;
+
+        // Check rows and columns
+        for (let i = 0; i < size; i++) {
+            if (board[i].every(cell => cell === this.currentPlayer)) {
+                this.winner = this.currentPlayer;
+                return;
+            }
+            if (board.map(row => row[i]).every(cell => cell === this.currentPlayer)) {
+                this.winner = this.currentPlayer;
+                return;
+            }
+        }
+
+        if (board.every((row, i) => row[i] === this.currentPlayer)) {
+            this.winner = this.currentPlayer;
+            return;
+        }
+        if (board.every((row, i) => row[size - i - 1] === this.currentPlayer)) {
+            this.winner = this.currentPlayer;
+            return;
+        }
+    }
+
+    isFull() {
+        return this.board.every(row => row.every(cell => cell !== null));
+    }
+
+    reset() {
+        this.board = Array.from({ length: this.size }, () => Array(this.size).fill(null));
+        this.currentPlayer = CROSS;
+        this.winner = null;
+    }
+}
+
 startGame();
 addResetListener();
 
