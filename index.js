@@ -84,7 +84,10 @@ function submitBoardSize () {
     const submitButton = document.getElementById('submitBoardSize');
     inputField.style.display = 'none';
     submitButton.style.display = 'none';
-    startGame(Number(inputField.value))
+    const size = Number(inputField.value)
+
+    if (size > 2)
+        startGame(size)
 }
 
 function renderGrid(dimension) {
