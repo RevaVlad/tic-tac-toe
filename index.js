@@ -63,11 +63,13 @@ class TicTacToe {
     }
 }
 
+const board = new TicTacToe();
 startGame();
 addResetListener();
 
 function startGame () {
     renderGrid(3);
+    board.reset()
 }
 
 function renderGrid (dimension) {
@@ -86,13 +88,14 @@ function renderGrid (dimension) {
 }
 
 function cellClickHandler (row, col) {
-    // Пиши код тут
     console.log(`Clicked on cell: ${row}, ${col}`);
+    const currentPlayer = board.currentPlayer;
+    if (board.makeMove(row, col)){
+        renderSymbolInCell(currentPlayer, row, col);
+        if (board.winner) {
 
-
-    /* Пользоваться методом для размещения символа в клетке так:
-        renderSymbolInCell(ZERO, row, col);
-     */
+        }
+    }
 }
 
 function renderSymbolInCell (symbol, row, col, color = '#333') {
@@ -113,6 +116,8 @@ function addResetListener () {
 }
 
 function resetClickHandler () {
+    renderGrid(3);
+    board.reset();
     console.log('reset!');
 }
 
