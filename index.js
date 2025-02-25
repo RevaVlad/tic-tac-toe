@@ -30,7 +30,6 @@ class TicTacToe {
     checkWinner() {
         const { size, board } = this;
 
-        // Check rows and columns
         for (let i = 0; i < size; i++) {
             if (board[i].every(cell => cell === this.currentPlayer)) {
                 this.winner = this.currentPlayer;
@@ -63,13 +62,21 @@ class TicTacToe {
     }
 }
 
-const board = new TicTacToe();
-startGame();
+let board = null
 addResetListener();
+addSubmitFieldSizeListener()
 
-function startGame () {
-    renderGrid(3);
-    board.reset()
+function startGame (boardSize) {
+    renderGrid(boardSize);
+    board = new TicTacToe(boardSize);
+}
+
+function submitBoardSize () {
+    const inputField = document.getElementById('boardSize');
+    const submitButton = document.getElementById('submitBoardSize');
+    inputField.style.display = 'none';
+    submitButton.style.display = 'none';
+    startGame(Number(inputField.value))
 }
 
 function renderGrid (dimension) {
@@ -115,15 +122,17 @@ function addResetListener () {
     resetButton.addEventListener('click', resetClickHandler);
 }
 
+function addSubmitFieldSizeListener () {
+    const submitButton = document.getElementById('submitBoardSize');
+    submitButton.addEventListener('click', submitBoardSize)
+}
+
 function resetClickHandler () {
-    renderGrid(3);
+    renderGrid(board.size);
     board.reset();
     console.log('reset!');
 }
 
-
-/* Test Function */
-/* Победа первого игрока */
 function testWin () {
     clickOnCell(0, 2);
     clickOnCell(0, 0);
